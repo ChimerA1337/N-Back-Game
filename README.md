@@ -1,56 +1,53 @@
-# Welcome to your Expo app 👋
+# N-Back
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Lab B:1 full-mark target implementation in TypeScript, React Native, and Expo SDK 58.
 
-## Get started
+## Run
 
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+Use Node 22.18+ (Node 26 was used for verification).
 
 ```bash
-npm run reset-project
+npm ci
+npm start
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+Open on an iOS/Android development build or a compatible Expo Go version. Speech and SecureStore are Expo modules; a development build is required when your installed client does not include compatible native modules. For a browser preview, use `npm run web`. On physical iPhones, disable silent mode to hear speech.
 
-### Other setup steps
+## Play
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+Choose Visual, Auditory, or Dual on Home, then open the game and press Start. Defaults are 30 events at 2.5 seconds each, with n = 2. Open Settings to persist mode, n, duration, round length, grid size, and letter count. Tap the relevant Match button when the current position/letter equals the one from n events earlier. Dual streams have independent buttons. The first n events are warm-up, and each channel accepts at most one response per event.
 
-## Learn more
+Hits earn 100 points; misses and false alarms cost 50 each. Scores cannot become negative. Completed rounds automatically update the local high score. Enter a name to save a completed round to SQLite. Open Score history to sort by name, score, or date; tap the same sort again to reverse it. Leaving or backgrounding an active round cancels it without saving.
 
-To learn more about developing your project with Expo, look at the following resources:
+## Check
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+npm test
+npm run lint
+npm run typecheck
+```
 
-## Join the community
+The tests use Node's built-in runner and TypeScript stripping, with no test framework dependency. See [test report](docs/TEST_REPORT.md) for automated results and manual checks still needed.
 
-Join our community of developers creating universal apps.
+## Code map
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- `src/domain/game.ts`: sequence generator, pure GameEngine, score formula, validated settings.
+- `src/viewmodels/use-game.ts`: React state, timers, speech, focus/background cleanup.
+- `src/repositories/high-score.ts`: asynchronous persistent high score (SecureStore on native, localStorage on web).
+- `src/app/index.tsx`, `src/app/game.tsx`: Home and Game views; views own navigation.
+- `src/components/match-button.tsx`: accessible match control and gentle incorrect-response animation.
+- `tests/game.test.mjs`: domain and lifecycle-rule tests.
+
+Additional code:
+
+- `src/app/settings.tsx` and `src/viewmodels/use-settings.ts`: editable persistent settings.
+- `src/app/history.tsx` and `src/viewmodels/use-history.ts`: sorted score history.
+- `src/repositories/settings.ts`: SecureStore settings on native; localStorage on web.
+- `src/repositories/scores.ts`: asynchronous SQLite connection and parameterized writes.
+- `src/domain/score-storage.ts`: shared SQL and name validation, exercised against real SQLite in tests.
+
+Rotation and tablet support are enabled. Landscape uses two columns where space and text size permit; smaller layouts scroll. The grid stays square. Native speech, rotation, and storage still require manual device verification. SQLite browser support requires cross-origin isolation: Metro sets the headers locally and the Router plugin configures EAS Hosting. Other hosts must supply COOP/COEP headers too. See the [Expo SQLite setup](https://docs.expo.dev/versions/v58.0.0/sdk/sqlite/).
+
+## Submission
+
+This implementation and its initial context documents were AI-assisted. Review [the process record](docs/LLM_PROCESS.md), verify the app yourself, and write your own reflection before submission. Explain every submitted line at the oral examination. No device verification or personal authorship is implied by these files.
