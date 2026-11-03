@@ -1,6 +1,6 @@
 # N-Back
 
-Lab B:1 full-mark target implementation in TypeScript, React Native, and Expo SDK 58.
+Implementation in TypeScript, React Native, and Expo SDK 58. Extensively used the AI Agent Codex to write the project.
 
 ## Run
 
@@ -47,7 +47,3 @@ Additional code:
 - `src/domain/score-storage.ts`: shared SQL and name validation, exercised against real SQLite in tests.
 
 Rotation and tablet support are enabled. Landscape uses two columns where space and text size permit; smaller layouts scroll. The grid stays square. Native speech, rotation, and storage still require manual device verification. SQLite browser support requires cross-origin isolation: Metro sets the headers locally and the Router plugin configures EAS Hosting. Other hosts must supply COOP/COEP headers too. See the [Expo SQLite setup](https://docs.expo.dev/versions/v58.0.0/sdk/sqlite/).
-
-## Submission
-
-This implementation and its initial context documents were AI-assisted. Review [the process record](docs/LLM_PROCESS.md), verify the app yourself, and write your own reflection before submission. Explain every submitted line at the oral examination. No device verification or personal authorship is implied by these files.

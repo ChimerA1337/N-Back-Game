@@ -1,7 +1,10 @@
 # Personal reflection — student to complete
 
-This file is a writing scaffold, not a completed personal reflection. The assistant cannot supply the student's lived experience. Replace these prompts with approximately half a page in your own words before submitting.
+## Surprise
+I was amazed how much better it works with all the directions the various .md files give it, especially with my free version of Codex. In my experience you want to be very wary of the chat model hallucinating or just writing needlessly complex code, so seeing that having prebuilt instructions for it fixing a lot of these issues was somewhat paradigm shifting.
 
-1. Describe one specific surprise while using AI in this lab. Identify the suggestion, code, or debugging moment; explain your expectation, what actually happened, and what you learned after reviewing it yourself.
-2. Describe one thing you would do differently next time. Make it concrete (for example, write a response-guard test before asking for UI code, or verify speech on a real device earlier), explain why, and connect it to something you actually observed.
-3. State which code you personally wrote or changed and which parts were AI-assisted. Do not claim any checks or contributions that you did not perform.
+## General Reflection
+Asking the LLM to explain what it did and how it works still does not seem to work very well, you really have to ask it very specific things and add a bunch of guard rails to your questions, which is a concern I have had from my previous experiences. However, giving a hypothesis on how the program works to the LLM, letting it tell you if the hypothesis is true or false and exactly how true or false it is, works very well. This has aided me greatly in my learning. The LLM also wrote very compactly specifically in the .tsx files in /src/app, I needed to prompt it to hit enter a bunch of times to make it more readable.
+
+## What would I do differently
+As for what I could do differently, I think I could do some research on how to best configure the LLM (I assume through one or many .md files) to be better at teaching and explaining itself. This way I could have bypassed a percieved weakness of vibe coding, being that you run the risk of short-circuiting your learning. I also probably should have used documentation to aid my learning, but I strongly dislike how they are written, too many magical unexplained things you just have to accept, so I just refused to use it. This is probably not a good approach lol and I probably should humble myself.

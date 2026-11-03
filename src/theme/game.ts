@@ -1,4 +1,7 @@
 import { StyleSheet } from 'react-native';
+
+// Defines css for various elements in the program.
+
 export const colors = {
   background: '#101816',
   surface: '#1B2823',

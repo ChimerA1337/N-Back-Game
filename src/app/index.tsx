@@ -25,14 +25,45 @@ export default function HomeScreen() {
     return () => { active = false; };
   }, []));
   return <SafeAreaView style={ui.screen}><ScrollView contentContainerStyle={ui.content}>
-    <View style={styles.brand}><Text style={ui.eyebrow}>WORKING MEMORY · N-BACK</Text><Text style={styles.mark}>n.</Text></View>
-    <View style={{ gap: 12 }}><Text style={ui.title}>A little focus.{'\n'}A stronger memory.</Text><Text style={ui.text}>Watch. Listen. Remember what came before.</Text></View>
-    <View style={[ui.card, ui.row]}><View><Text style={ui.eyebrow}>PERSONAL BEST</Text><Text style={styles.score}>{highScore === null ? '—' : highScore.toLocaleString()}</Text></View><Text style={styles.star}>✧</Text></View>
+    <View style={styles.brand}>
+      <Text style={ui.eyebrow}>WORKING MEMORY · N-BACK</Text>
+      <Text style={styles.mark}>n.</Text>
+    </View>
+
+    <View style={{ gap: 12 }}>
+      <Text style={ui.title}>A little focus.{'\n'}A stronger memory.</Text>
+      <Text style={ui.text}>Watch. Listen. Remember what came before.</Text>
+    </View>
+
+    <View style={[ui.card, ui.row]}>
+      <View>
+        <Text style={ui.eyebrow}>PERSONAL BEST</Text>
+        <Text style={styles.score}>{highScore === null ? '—' : highScore.toLocaleString()}</Text>
+      </View>
+      <Text style={styles.star}>✧</Text>
+    </View>
     {error ? <Text accessibilityRole="alert" style={ui.small}>{error}</Text> : null}
-    <View style={{ gap: 12 }}><Text style={ui.heading}>Choose your focus</Text>{modes.map((item) => <Pressable key={item.value} accessibilityRole="radio" accessibilityState={{ checked: mode === item.value }} onPress={() => setMode(item.value)} style={({ pressed }) => [styles.mode, mode === item.value && styles.selected, pressed && ui.pressed]}>
-      <Text style={styles.symbol}>{item.symbol}</Text><View style={{ flex: 1 }}><Text style={styles.label}>{item.label}</Text><Text style={ui.small}>{item.hint}</Text></View><Text style={styles.radio}>{mode === item.value ? '●' : '○'}</Text>
-    </Pressable>)}</View>
-    <View style={ui.card}><Text style={ui.eyebrow}>THIS ROUND · {mode.toUpperCase()}</Text><View style={ui.row}>{[[`${settings.n}-back`, 'Memory gap'], [`${settings.eventDurationMs / 1000}s`, 'Per event'], [String(settings.eventCount), 'Events']].map(([value, label]) => <View key={label} style={{ gap: 4 }}><Text style={ui.heading}>{value}</Text><Text style={ui.small}>{label}</Text></View>)}</View></View>
+
+    <View style={{ gap: 12 }}>
+      <Text style={ui.heading}>Choose your focus</Text>
+      {modes.map((item) => <Pressable key={item.value} 
+        accessibilityRole="radio" 
+        accessibilityState={{ checked: mode === item.value }} 
+        onPress={() => setMode(item.value)} 
+        style={({ pressed }) => [styles.mode, mode === item.value && styles.selected, pressed && ui.pressed]}>
+      <Text style={styles.symbol}>{item.symbol}</Text>
+      <View style={{ flex: 1 }}>
+        <Text style={styles.label}>{item.label}</Text>
+        <Text style={ui.small}>{item.hint}</Text>
+      </View>
+      <Text style={styles.radio}>{mode === item.value ? '●' : '○'}</Text>
+    </Pressable>)}
+    </View>
+
+    <View style={ui.card}>
+      <Text style={ui.eyebrow}>THIS ROUND · {mode.toUpperCase()}</Text>
+      <View style={ui.row}>
+        {[[`${settings.n}-back`, 'Memory gap'], [`${settings.eventDurationMs / 1000}s`, 'Per event'], [String(settings.eventCount), 'Events']].map(([value, label]) => <View key={label} style={{ gap: 4 }}><Text style={ui.heading}>{value}</Text><Text style={ui.small}>{label}</Text></View>)}</View></View>
     <Pressable accessibilityRole="button" style={({ pressed }) => [ui.button, pressed && ui.pressed]} disabled={loading} onPress={() => { void save(); router.push({ pathname: '/game', params: { config: JSON.stringify(settings) } }); }}><Text style={ui.buttonText}>Let’s practice →</Text></Pressable>
     <View style={ui.row}><Pressable accessibilityRole="button" style={ui.button} onPress={() => router.push('/settings')}><Text style={ui.buttonText}>Settings</Text></Pressable><Pressable accessibilityRole="button" style={ui.button} onPress={() => router.push('/history')}><Text style={ui.buttonText}>Score history</Text></Pressable></View>
     {message ? <Text style={ui.small}>{message}</Text> : null}
